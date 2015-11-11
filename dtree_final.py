@@ -73,11 +73,26 @@ def check_continuity(cur_att, test_data):
     edible = data[data['class'] == 'e']
 
 
+def calculate_error(actual_data, output):
+    total = len(actual_data)
+    pos = 0
+    for i in range(0, len(actual_data)):
+        if actual_data.iloc[i]['class'] == output[i]:
+            #print actual_data.iloc[i]['class'], output[i]
+            pos += 1
+
+    return (pos/total) * 100
+
+
+
 if __name__ == '__main__':
     columns = ['class', 'cap_shape', 'cap_surface', 'cap_color', 'bruises', 'odor']
     op = []
     test_dat = pd.read_csv('mushroom_testdata.csv', names=columns)
-    rows = random.sample(test_dat.index, randint(30, 90))
+    train_dat = pd.read_csv('mushroom_data.csv', names=columns)
+    rows = random.sample(train_dat.index, randint(30, 90))
+    pass_data = train_dat.ix[rows]
+    pass_data.to_csv('sample_training_data.csv', index=False)
 
     #  Tree Level 1 datasets below
 
@@ -113,6 +128,12 @@ if __name__ == '__main__':
                 check_continuity(current_att, test_dat.iloc[j])  # Checks continuity or if leaf node encountered
 
     print op
+
+    if sys.argv[1] == 'bagging':
+        pass
+    else:
+        print 'Classification accuracy rate: ' + str(calculate_error(test_dat, op))
+
 
 
 

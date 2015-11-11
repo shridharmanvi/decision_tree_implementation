@@ -17,12 +17,12 @@ for i in range(0,4):
 
     dat = test_dat.iloc[i]
     subprocess.call('pwd')
-    s2_out = subprocess.check_output([sys.executable, "dtree_final.py", "mushroom_data.csv"])
+    s2_out = subprocess.check_output([sys.executable, "dtree_final.py", "bagging"])
     #subprocess.call(['./dtree_final.py', 'test_data.csv'])
     #print [s2_out]
     l1=[]
     for j in s2_out:
-        if j in ['e','p']:
+        if j in ['e', 'p']:
             l1.append(j)
 
     print len(l1)
